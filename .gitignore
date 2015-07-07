@@ -26,3 +26,9 @@
 *.exe
 *.out
 *.app
+
+#vim temp files
+*.sw*
+
+#build dir
+build/
