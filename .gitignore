@@ -32,3 +32,7 @@
 
 #build dir
 build/
+
+# html files from the readme (these are the only html I expect to be in here.
+# Everything else should be rst generated)
+*.html
