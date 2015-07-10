@@ -1,0 +1,3 @@
+- url: git@github.com:theNerd247/arcb.git
+  storageDir: proj
+  branch: master
