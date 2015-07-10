@@ -88,7 +88,6 @@ function(BuildProject
 	set(x "executable;staticlib;sharedlib")
 	list(FIND x ${buildType} isBuildable)
 	if(isBuildable GREATER -1)
-		message("${PROJECT_NAME}_libraries: ${${PROJECT_NAME}_libraries}")
 		target_link_libraries(${PROJECT_NAME} ${${PROJECT_NAME}_libraries})
 	endif(isBuildable GREATER -1)
 
@@ -111,6 +110,7 @@ function(BuildProject
 		)
 
 	#add the subprojects to this project
+  #TDOO move this up and add the subdirs project info as part of this project
 	foreach(p ${internalSubDirs})
 		add_subdirectory(${p})
 	endforeach(p)
