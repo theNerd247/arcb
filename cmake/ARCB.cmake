@@ -112,7 +112,26 @@ function(BuildProject
 	#add the subprojects to this project
   #TDOO move this up and add the subdirs project info as part of this project
 	foreach(p ${internalSubDirs})
-		add_subdirectory(${p})
+		#if the project doesn't already exist then create it...BUT DON'T ADD IT TO
+		#THE BUILD...THE USER NEEDS TO MODIFY THE CMakeLists FILE FIRST!!!!
+		if(NOT EXISTS "${PROJECT_SOURCE_DIR}/${p}")
+			#create the project,src, and include directories
+			file(MAKE_DIRECTORY 
+				"${PROJECT_SOURCE_DIR}/${p}"
+				"${PROJECT_SOURCE_DIR}/${p}/src"
+				"${PROJECT_SOURCE_DIR}/${p}/include/${p}"
+				)
+
+			#create the CMakeList.txt file
+			file(COPY 
+				"${ARCB_MODULE_PATH}/CMakeLists.txt.skel"
+				"${PROJECT_SOURCE_DIR}/${p}/CMakeLists.txt"
+				)
+		#other wise add the project
+		else(EXISTS "${PROJECT_SOURCE_DIR}/${p}")
+			add_subdirectory(${p})
+		endif(EXISTS "${PROJECT_SOURCE_DIR}/${p}")
+
 	endforeach(p)
 
 endfunction(BuildProject)
