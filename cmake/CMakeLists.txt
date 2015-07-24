@@ -3,7 +3,10 @@ cmake_policy(SET CMP0011 NEW)
 
 # only set this if it's the very toplevel project where your module directory is
 # located (in this case it's cmake)
-# set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+# set(ARCB_MODULE_PATH 
+#		"${PROJECT_SOURCE_DIR}/cmake/arcb/cmake"
+#		CACHE INTERNAL "the cmake module path to arcb")
+# set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${ARCB_MODULE_PATH})
 
 include(ARCB)
 
