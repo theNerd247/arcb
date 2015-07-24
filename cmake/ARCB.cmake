@@ -40,7 +40,7 @@ function(BuildProject
 		# a mess?
 		subProjects 
 
-		#subprojects that are contained within this one (as their own
+		#sub-projects that are contained within this one (as their own
 		#subdirectories) these projects are assumed to be dependent on this project
 		#and this project only
 		internalSubDirs
@@ -73,6 +73,12 @@ function(BuildProject
 	set(${PROJECT_NAME}_libraries "")
 	set(${PROJECT_NAME}_includeDirs "")
 
+	#flatten the subprojects dependencies
+	foreach(p ${subProjects})
+		listUpdate(subProjects "${${p}_subProjects}")
+	endforeach(p)
+
+
 	# add the subProject information to this project
 	foreach(p ${subProjects})
 		listUpdate(${PROJECT_NAME}_includeDirs "${${p}_INCLUDE_DIRS}")
@@ -91,10 +97,10 @@ function(BuildProject
 		target_link_libraries(${PROJECT_NAME} ${${PROJECT_NAME}_libraries})
 	endif(isBuildable GREATER -1)
 
-	#Export variables
+	#export the include dirs
 	set(${PROJECT_NAME}_INCLUDE_DIRS
 		${${PROJECT_NAME}_includeDirs}
-		CACHE INTERNAL "the include dirs"
+		CACHE INTERNAL "the include dirs for ${PROJECT_NAME}"
 		)
 
 	# add the current project to its own library include list if it's a library
@@ -104,13 +110,20 @@ function(BuildProject
 		listUpdate(${PROJECT_NAME}_libraries ${PROJECT_NAME})
 	endif(staticlib STREQUAL ${buildType} OR sharedlib STREQUAL ${buildType})
 
+	#export our libraries
 	set(${PROJECT_NAME}_LIBRARIES
 		${${PROJECT_NAME}_libraries}
-		CACHE INTERNAL "the libraries for this project"
+		CACHE INTERNAL "the libraries for ${PROJECT_NAME}"
 		)
 
-	#add the subprojects to this project
-	#TDOO move this up and add the subdirs project info as part of this project
+	#export the subprojects
+	set(${PROJECT_NAME}_subProjects 
+		CACHE INTERNAL "the subprojects for ${PROJECT_NAME}"
+		${subProjects}
+		)
+
+	#add the sub-projects to this project
+  #TODO move this up and add the subdirs project info as part of this project
 	foreach(p ${internalSubDirs})
 		#if the project doesn't already exist then create it...BUT DON'T ADD IT TO
 		#THE BUILD...THE USER NEEDS TO MODIFY THE CMakeLists FILE FIRST!!!!
