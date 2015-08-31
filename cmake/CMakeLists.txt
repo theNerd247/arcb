@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 2.6)
 cmake_policy(SET CMP0011 NEW)
 
+project("project")
+
 # only set this if it's the very toplevel project where your module directory is
 # located (in this case it's cmake)
 # set(ARCB_MODULE_PATH 
@@ -9,8 +11,6 @@ cmake_policy(SET CMP0011 NEW)
 # set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${ARCB_MODULE_PATH})
 
 include(ARCB)
-
-project("project")
 
 # should be "toplevel","executable","staticlib",or "sharedlib"
 set(buildType "toplevel")
