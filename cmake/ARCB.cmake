@@ -55,9 +55,9 @@ function(BuildProject
 
 	# add the executable/library to the project
 	if(executable STREQUAL ${buildType})	
-		add_executable("${PROJECT_NAME}" ${sources})
+		add_avr_executable("${PROJECT_NAME}" ${sources})
 	elseif(staticlib STREQUAL ${buildType})
-		add_library("${PROJECT_NAME}" STATIC ${sources})
+		add_avr_library("${PROJECT_NAME}" STATIC ${sources})
 	elseif(sharedlib STREQUAL ${buildType})
 		add_library("${PROJECT_NAME}" SHARED ${sources})
 	elseif(headerlib STREQUAL ${buildType})
@@ -94,7 +94,7 @@ function(BuildProject
 	set(x "executable;staticlib;sharedlib")
 	list(FIND x ${buildType} isBuildable)
 	if(isBuildable GREATER -1)
-		target_link_libraries(${PROJECT_NAME} ${${PROJECT_NAME}_libraries})
+		avr_target_link_libraries(${PROJECT_NAME} ${${PROJECT_NAME}_libraries})
 	endif(isBuildable GREATER -1)
 
 	#export the include dirs
