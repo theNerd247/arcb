@@ -81,7 +81,8 @@ function(BuildProject
 
 	# add the subProject information to this project
 	foreach(p ${subProjects})
-		listUpdate(${PROJECT_NAME}_includeDirs "${${p}_INCLUDE_DIRS}")
+		message(STATUS "Project: ${PROJECT_NAME}: ${p}: ${${p}_INCLUDE_DIR}")
+		listUpdate(${PROJECT_NAME}_includeDirs "${${p}_INCLUDE_DIR}")
 		listUpdate(${PROJECT_NAME}_libraries "${${p}_LIBRARIES}")
 	endforeach(p)
 
@@ -98,7 +99,7 @@ function(BuildProject
 	endif(isBuildable GREATER -1)
 
 	#export the include dirs
-	set(${PROJECT_NAME}_INCLUDE_DIRS
+	set(${PROJECT_NAME}_INCLUDE_DIR
 		${${PROJECT_NAME}_includeDirs}
 		CACHE INTERNAL "the include dirs for ${PROJECT_NAME}"
 		)
